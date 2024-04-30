@@ -8,58 +8,53 @@
 %           dev06: I am having problems with rotate and polyshape (ill-defined, NaNs, duplicate points...),trying with custom code and rotation matrix
 % 12ene2024 styles of plots can be changed for publish-ready figures.
 % 24ene2024 new chart witht he min/max ratio values along the transverse shape in each spatial point, to have an overview of "possibilities"
-% 28ene2024 draw point and shape every N points
+% 28ene2024 draw point and shape every N points. Trying to remove outliers from min/max chart
+% 30apr2024 version for JAS: raw data copied to onedrive and basePath changed to point to root folder
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%febrero
-% Specify the path to your CSV file (2D) or FIG (2D) or leave as '' and a dialog window will ask for the file
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\17082023-130945Nueva medida 2D LAN177\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\29082023-085942Nueva medida 2D LAN176\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\figure24ratio.fig';
-%input_filename= 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\18082023-122613Nueva medida 2D LAN182\figure24ratio.fig'
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\29082023-131210Nueva medida 2D LAN183\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\24012023-184427LAN-184-2D\figure24ratio.fig';
+basePath = '.\';   % folders with raw data should be in child folders
 
-%agosto
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\17012023-111955_LAN254_seccion-izquierda_lado-anterior_medida_2D\figure24ratio.fig'
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\25012023-150202LAN-255-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\26012023-091827LAN-256-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\30012023-181006LAN-258-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D\figure24ratio.fig'
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\10012023-165455_LAN261_seccion-izquierda_lado-anterior2D\figure24ratio.fig';
+%%%%%  febrero paper VirtualSamping
+folder{1} =  '20012023-094702LAN-178-2D';
+folder{2} =  '28022023-115257_LAN183_2D';
+folder{3} =  '29082023-085942Nueva medida 2D LAN176';
+folder{4} =  '17082023-130945Nueva medida 2D LAN177';
+folder{5} =  '18082023-122613Nueva medida 2D LAN182';
+folder{6} =  '24012023-184427LAN-184-2D';
 
-%junio
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\24082023-113152Nueva medida 2D LAN229\figure24ratio.fig';
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\25082023-102547Nueva medida 2D LAN230\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\02022023-193824LAN-231-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\28082023-114458Nueva medida 2D LAN235\figure24ratio.fig';
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\31012023-162620LAN-236-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\01022023-105931LAN-237-2D\figure24ratio.fig';
+%%%%% agosto 
+folder{7} =  '17012023-111955_LAN254_seccion-izquierda_lado-anterior_medida_2D';
+folder{8} =  '25012023-150202LAN-255-2D';
+folder{9} =  '26012023-091827LAN-256-2D';
+folder{10} =  '30012023-181006LAN-258-2D';
+folder{11} =  '13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D';
+folder{12} =  '10012023-165455_LAN261_seccion-izquierda_lado-anterior2D';
 
-%noviembre
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\21022023-094620LAN96-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20022023-170249LAN98-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\22082023-130128Nueva medida 2D LAN100\figure24ratio.fig'
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\22022023-122312LAN105-2D\figure24ratio.fig';
-%input_filename = 'C:\Users\Adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\23082023-111426Nueva medida 2D LAN109\figure24ratio.fig';
-%LAN122 is not measured
 
-%%%%%%% medidas en Alemania - LEIZA
-%febrero
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Lanegre2012_repulidas_MedidasNiklas\febrero\LAN176\LAN176L_20120223_30_ANT_analyzed_data.csv';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Lanegre2012_repulidas_MedidasNiklas\febrero\LAN177\LAN177L_20120223_30_ANT_analyzed_data.csv';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Lanegre2012_repulidas_MedidasNiklas\febrero\LAN184\LAN184L_20120223_30_POST_analyzed_data.csv';
-%input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Lanegre2012_repulidas_MedidasNiklas\febrero\LAN184\LAN184L_20120223_30_ANT2_analyzed_data.csv';
+%%%%% junio
+folder{13} =  '24082023-113152Nueva medida 2D LAN229';
+folder{14} =  '25082023-102547Nueva medida 2D LAN230';
+folder{15} =  '02022023-193824LAN-231-2D';
+folder{16} =  '28082023-114458Nueva medida 2D LAN235';
+folder{17} =  '31012023-162620LAN-236-2D';
+folder{18} =  '01022023-105931LAN-237-2D';
+    
+%%%%% noviembre
+folder{19} =  '21022023-094620LAN96-2D';
+folder{20} =  '20022023-170249LAN98-2D';
+folder{21} =  '22082023-130128Nueva medida 2D LAN100';
+folder{22} =  '22022023-122312LAN105-2D';
+folder{23} =  '23082023-111426Nueva medida 2D LAN109';
 
-%%%%% LAN178
-input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\figure24ratio.fig';
-pathFileToRead = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiPath_LAN178.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D\ratio_1D_25122023_231724_roiPath_VS.mat'; % "C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\02022023-193824LAN-231-2D\ratio_1D_25122023_230202_roiPath_VS.mat" % 'C:\Users\adolf\Downloads\ratio_1D_25122023_224117_roiPath_VS.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiPath_LAN178.mat';  %set pathFileToRead=''  to draw, a file to load that file with the linePath
-borderFileToRead = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiBorder_LAN178.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D\ratio_1D_25122023_231724_roiBorder_VS.mat'; % "C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\02022023-193824LAN-231-2D\ratio_1D_25122023_230202_roiBorder_VS.mat" % 'C:\Users\adolf\Downloads\ratio_1D_25122023_224117_roiBorder_VS.mat'; % 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiBorder_LAN178.mat'; % set to a ROI with the border (isochronous) shape
+input_dir = folder{1}; % choose here the folder to process
 
-%%%%% LAN183 paper VirtualSampling
-input_filename = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\28022023-115257_LAN183_2D\figure24ratio.fig';
-pathFileToRead = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\28022023-115257_LAN183_2D\ratio_1D_again_28012024_184251_roiPath_VS.mat'; %C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\28022023-115257_LAN183_2D\roiPath_LAN178.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D\ratio_1D_25122023_231724_roiPath_VS.mat'; % "C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\02022023-193824LAN-231-2D\ratio_1D_25122023_230202_roiPath_VS.mat" % 'C:\Users\adolf\Downloads\ratio_1D_25122023_224117_roiPath_VS.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiPath_LAN178.mat';  %set pathFileToRead=''  to draw, a file to load that file with the linePath
-borderFileToRead = 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\28022023-115257_LAN183_2D\ratio_1D_again_28012024_184251_roiBorder_VS.mat'; %C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiBorder_LAN178.mat'; % C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\13012023-105703_LAN259_seccion-izquierda_lado-anterior_medida_2D\ratio_1D_25122023_231724_roiBorder_VS.mat'; % "C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\02022023-193824LAN-231-2D\ratio_1D_25122023_230202_roiBorder_VS.mat" % 'C:\Users\adolf\Downloads\ratio_1D_25122023_224117_roiBorder_VS.mat'; % 'C:\Users\adolf\UNICAN\Proyecto deepRAMP - LIBS\Arqueo\Lapas_Langre2012_Repulidas\20012023-094702LAN-178-2D\roiBorder_LAN178.mat'; % set to a ROI with the border (isochronous) shape
+
+
+input_filename = [ basePath input_dir '\figure24ratio.fig'];
+S=dir([basePath input_dir '\*roiPath*']);[~,idx] = sort([S.datenum]);S = S(idx);
+pathFileToRead = [basePath input_dir '\' S(1).name]; % the last file with roiPath in its name is selected
+S=dir([basePath input_dir '\*roiBorder*']);[~,idx] = sort([S.datenum]);S = S(idx);
+borderFileToRead = [basePath input_dir '\' S(1).name]; % the last file with roiBorder in its name is selected
+
 
 
 %%%%% ASK FOR IT
@@ -76,6 +71,7 @@ maxAngleExcursion = 15; % this is the maximum difference of each shape angle wit
 minRsdVariation = 0.02; % this is the minimum value of "rsd variation" to actually changes the shape.  "rsd variation" is the rsd of the rsd vector for all parameters trials in each point, so it is an estimation of how defined are the growth lines around that point, for "shapeless noisy" areas it is better not to change anything. set to 0 to remove this control.
 drawEveryNPoints = 5; % set to one to draw all of them
 fixedYaxis = [0 0]; % set to min and max values to fix de vertical scale, or [0 0] to do nothing
+removeOutliers = 1; % remove outliers from min/max charts
 
 DEBUG=0;
 
@@ -301,7 +297,8 @@ for i=1:size(roiPath.Position,1) - 1
         % this is the starting shape
         %removed roiThisBorder= drawpolyline('Position',lastShape,'Color','white','LineWidth',0.4,'MarkerSize',0.1); % removed, better not shown, no, we need to know the shape against the current growth lines
         if rem(pointNumber,drawEveryNPoints)==0
-            drawpoint('Position',[seq_realPos(end,1),seq_realPos(end,2)],'Color','white','MarkerSize',5);
+            figure(25);
+            drawpoint('Position',[seq_realPos(end,1),seq_realPos(end,2)],'Color','white','MarkerSize',5,'LineWidth',2);
         end
         drawnow;
         %%%%%%%%%%%%%%%%%
@@ -392,7 +389,8 @@ for i=1:size(roiPath.Position,1) - 1
         end
         % plot the final shape
         if rem(pointNumber,drawEveryNPoints)==0
-            drawpolyline('Position',[interpSBX ;interpSBY]','Color','white','LineWidth',0.6,'MarkerSize',0.4); % removed, better not shown, no, we need to know the shape against the current growth lines
+            figure(25);
+            drawpolyline('Position',[interpSBX ;interpSBY]','Color','white','LineWidth',3,'MarkerSize',3); % removed, better not shown, no, we need to know the shape against the current growth lines
         end
         iso_realPos = [ interpSBX ; interpSBY]';
         %iso_realPos = [ interpSBX ; interpSBY]';
@@ -412,10 +410,17 @@ for i=1:size(roiPath.Position,1) - 1
         end
         % and now we have the values of ratio and errors. errors of the "pooled" data can be obtained following  https://www.isixsigma.com/dictionary/pooled-standard-deviation/
         %figure; histogram(iso_ratios);
-        avgRatio = mean(iso_ratios,'omitnan');
-        minRatio = min(iso_ratios,[],'omitnan');
-        maxRatio = max(iso_ratios,[],'omitnan');
-        iea = sum((iso_ratios(~isnan(iso_ratios)) - avgRatio).^2);
+        % remove outliers
+        if removeOutliers
+            noout_iso_ratios = rmoutliers(iso_ratios); % uses this matlab function, "By default, an outlier is a value that is more than three scaled median absolute deviations (MAD) from the median."
+        else
+            noout_iso_ratios = iso_ratios;
+        end
+        avgRatio = mean(noout_iso_ratios,'omitnan');
+        minRatio = min(noout_iso_ratios,[],'omitnan');
+        maxRatio = max(noout_iso_ratios,[],'omitnan');
+        % std calcs 
+        iea = sum((noout_iso_ratios(~isnan(noout_iso_ratios)) - avgRatio).^2);
         avgStdAbs = sqrt(iea / (actualNpulses*size(iso_ratios(~isnan(iso_ratios)),1) -size(iso_ratios(~isnan(iso_ratios)),1))) ; % this is the total number of degrees of freedom (total sample size minus the number of groups)
         avgStdRel = avgStdAbs / avgRatio;
         % original sequence without VS
@@ -454,16 +459,17 @@ ejeParamR = paramRFrom:seq_deltaR:paramRTo;
 fnormal=figure(26);
 fnormal.Name = strcat('Sequence (no VS) from... ', input_filename);
 % prueba de poner barras de error
-plot (ejeParamR,seq_ratios, 'Color', 'black','linewidth', 2);
+clf;
 hold on;
 errorbar(ejeParamR,seq_ratios,seq_errors_abs,'LineStyle','none', 'Color', '#AAAAAA','linewidth', 1);
+plot (ejeParamR,seq_ratios, 'Color', 'red','linewidth', 2);
 %plot (ejeParamR,sequence);
 hold off;
-xlabel('deltaR on 1D path [mm]');
+xlabel(xCoord1Dlabel);
 if isequal(fExt,'.fig')  % from our experiments
-    ylabel('Mg/Ca ratio [mmol/mol]');
+    ylabel('Mg/Ca ratio (mmol/mol)');
 else
-    ylabel('Mg/Ca line intensity ratio [a.u.]');
+    ylabel('Mg/Ca line intensity ratio (a.u.)');
 end
 if ~all(fixedYaxis == [0 0])
     ylim(fixedYaxis);
@@ -472,16 +478,17 @@ end
 fvs=figure(27);
 fvs.Name = strcat('Sequence (VirtualSamping) from... ', input_filename);
 % prueba de poner barras de error
-plot (ejeParamR,seqVS_ratios, 'Color', 'black','linewidth', 2);
+clf;
 hold on;
 errorbar(ejeParamR,seqVS_ratios,seqVS_errors_abs,'LineStyle','none', 'Color', '#AAAAAA','linewidth', 1);
+plot (ejeParamR,seqVS_ratios, 'Color', 'red','linewidth', 2);
 %plot (ejeParamR,sequence);
 hold off;
-xlabel('deltaR on 1D path [mm]');
+xlabel(xCoord1Dlabel);
 if isequal(fExt,'.fig')  % from our experiments
-    ylabel('VS Mg/Ca ratio [mmol/mol]');
+    ylabel('VS Mg/Ca ratio (mmol/mol)');
 else
-    ylabel('VS Mg/Ca line intensity ratio [a.u.]');
+    ylabel('VS Mg/Ca line intensity ratio (a.u.)');
 end
 if ~all(fixedYaxis == [0 0])
     ylim(fixedYaxis);
@@ -518,12 +525,16 @@ clf;
 fminmax.Name = strcat('Min/max values of ratio from... ', input_filename);
 % prueba de poner barras de error
 hold on;
-plot (ejeParamR,seqVS_ratios, 'Color', 'black','linewidth', 2);
-plot (ejeParamR,seqVS_minEachPoint, 'Color', [0.5 0.5 0.5], 'linewidth', 2);
-plot (ejeParamR,seqVS_maxEachPoint, 'Color', [0.5 0.5 0.5], 'linewidth', 2);
+
+%plot (ejeParamR,seqVS_minEachPoint, 'Color', [0.5 0.5 0.5], 'linewidth', 2);
+%plot (ejeParamR,seqVS_maxEachPoint, 'Color', [0.5 0.5 0.5], 'linewidth', 2);
+xfill = [ ejeParamR , fliplr(ejeParamR)];
+yfill = [seqVS_minEachPoint',  fliplr(seqVS_maxEachPoint')];
+fill( xfill, yfill,[0.9 0.9 0.9], 'LineStyle','none');
+plot (ejeParamR,seqVS_ratios, 'Color', 'red','linewidth', 2);
 hold off;
-xlabel('deltaR on 1D path [mm]');
-ylabel('Rango of ratio values in each deltaR point');
+xlabel(xCoord1Dlabel);
+ylabel('Range of ratio values in each growth line');
 if ~all(fixedYaxis == [0 0])
     ylim(fixedYaxis);
 end
